@@ -1,0 +1,67 @@
+* {
+  font-family: 'Fira Code';
+  color: #444;
+}
+
+.App {
+  margin: 3vw;
+  padding: 2vw;
+  display: flex;
+}
+
+button {
+  padding: 7px;
+  font-size: 1rem;
+  text-transform: lowercase;
+  background: transparent;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+/* Image container */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 5px;
+}
+
+.image {
+  display: flex;
+  flex: 1;
+
+  min-height: 70vh;
+  background: darkgray;
+}
+
+/* Actions */
+.actions {
+  flex: 2;
+  margin: 5px;
+  display: flex;
+  color: darkgray;
+}
+
+.flex-actions {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px;
+  align-items: center;
+}
+
+.action-button {
+  margin: 10px 5px;
+  width: 50%;
+}
+
+.action-button.reset {
+  align-self: flex-end;
+  width: 30%;
+}
+
+h4 {
+  font-weight: normal;
+}

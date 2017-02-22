@@ -6,7 +6,8 @@
     },
     "settings": {
         "ecmascript": 6,
-        "jsx": true
+        "jsx": true,
+        "semi": never
     },
     "plugins": [
         "react"
