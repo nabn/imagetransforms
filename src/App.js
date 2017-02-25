@@ -2,56 +2,99 @@ import './App.css'
 import React, { Component } from 'react'
 import ImageContainer from './Components/ImageContainer'
 import Actions from './Components/Actions'
-import { take, takeLast } from 'ramda'
+import {clone} from 'ramda'
 
 class App extends Component {
 
-  setCSSClass = suffix => _ => {
-    const { classNameSuffixes } = this.state
-    this.setState({ classNameSuffixes: [
-      ...classNameSuffixes
-      , suffix
-    ]})
+  setCSSClass = (suffix, id) => _ => {
+    const { classNameSuffixes
+      , availableActions
+      , appliedActions } = this.state
+
+    const thisAction = availableActions.filter(a => a.id === id)[0]
+    thisAction['applied'] = true
+
+    this.setState({ classNameSuffixes: [...classNameSuffixes , suffix]
+                  , availableActions: availableActions.filter(a => a.id !== id)
+                  , appliedActions: [...appliedActions, thisAction]
+    })
   }
 
-  setTransform = t => _ => {
-    const {transforms} = this.state
-    this.setState({transforms: [
-      ...transforms
-      , t
-    ]})
+  setTransform = (t, id) => _ => {
+    const { transforms
+          , availableActions
+          , appliedActions } = this.state
+
+    const thisAction = availableActions.filter(a => a.id === id)[0]
+    thisAction.applied = true
+
+    this.setState({ transforms: [...transforms , t]
+                  , availableActions: availableActions.filter(a => a.id !== id)
+                  , appliedActions: [...appliedActions, thisAction]
+    })
+  }
+
+  removeAction = id => _ => {
+    const { availableActions
+      , appliedActions
+      , transforms } = this.state
+    const thisAction = appliedActions.filter(a => a.id === id)[0]
+    thisAction.applied = false
+
+    /* eslint-disable react/no-direct-mutation-state  */
+    // we do want to directly mutate state
+    // in this case, because we don't want
+    // react to rerender twice
+    if ('notranslate' in thisAction) {
+      this.state.classNameSuffixes = []
+    } else {
+      this.state.transforms = transforms.filter(t => t !== thisAction.action)
+    }
+
+    this.setState({ availableActions: [...availableActions, thisAction]
+                  , appliedActions: appliedActions.filter(a => a.id !== id)})
   }
 
   allActions = [{ id: 1
     , label: 'rotate'
-    , handler: this.setTransform('rotate(45deg)')
+    , action: 'rotate(45deg)'
+    , handler: this.setTransform('rotate(45deg)', 1)
+    , applied: false
   } , { id: 2
     , label: 'translate'
-    , handler: this.setTransform('translateX(-40px)')
+    , action: 'translateX(-40px)'
+    , handler: this.setTransform('translateX(-40px)', 2)
+    , applied: false
   } , { id: 3
     , label: 'opacity'
-    , handler: this.setCSSClass('transparent')
-  } , { id: 1
+    , handler: this.setCSSClass('transparent', 3)
+    , applied: false
+    , notranslate: true
+  } , { id: 4
     , label: 'scale'
-    , handler: this.setTransform('scale(0.5)')
+    , action: 'scale(0.5)'
+    , handler: this.setTransform('scale(0.5)', 4)
+    , applied: false
   }]
 
   state = { imageSrc: null
-    , classNameSuffixes: []
-    , transforms: []
-    , availableActions: [...this.allActions]
-    , appliedActions: [] }
+          , classNameSuffixes: []
+          , transforms: []
+          , availableActions: clone(this.allActions)
+          , appliedActions: []}
 
-
-  clearTransforms = _ =>
+  clearTransforms = _ => {
     this.setState({ classNameSuffixes: []
-      , transforms: []})
+                  , transforms: []
+                  , availableActions: clone(this.allActions)
+                  , appliedActions: []})
+  }
 
   handleFileChange = e => {
-    const reader = new FileReader()
     const file = e.target.files[0]
-
     if (!file) return
+
+    const reader = new FileReader()
 
     reader.onloadend = _ => {
       this.clearTransforms()
@@ -66,6 +109,8 @@ class App extends Component {
   render() {
     const { imageSrc
           , transforms
+          , availableActions
+          , appliedActions
           , classNameSuffixes } = this.state
     return (
       <div className="App">
@@ -76,8 +121,9 @@ class App extends Component {
           classNameSuffixes={classNameSuffixes} />
         <Actions
           clear={this.clearTransforms}
-          available={take(3, this.allActions)}
-          applied={takeLast(1, this.allActions)} />
+          removeAction={this.removeAction}
+          available={availableActions}
+          applied={appliedActions} />
       </div>
     )
   }

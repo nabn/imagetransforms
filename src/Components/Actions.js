@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Actions = ({ available, applied, clear }) => {
-  const renderActionButton = btn => (
+const Actions = ({ available, applied, clear, removeAction }) => {
+  const renderActionButton = action => (
     <button
-      key={btn.id}
-      onClick={btn.handler}
+      key={action.id}
+      onClick={action.applied ? removeAction(action.id) : action.handler }
       className='action-button'>
-      {btn.label}
+      {action.label}
     </button>
   )
 
