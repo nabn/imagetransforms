@@ -47,20 +47,8 @@ button {
   margin: 5px 0;
 }
 
-.translated {
-  transform: translateX(-40px);
-}
-
-.rotated {
-  transform: rotate(45deg);
-}
-
-.opacity-changed {
+.transparent {
   opacity: 0.5;
-}
-
-.scaled {
-  transform: scale(0.5);
 }
 
 /* Actions */

@@ -5,8 +5,9 @@ import Actions from './Components/Actions'
 import { take, takeLast } from 'ramda'
 
 class App extends Component {
-  state = { imageSrc: null 
-    , classNameSuffixes: [] }
+  state = { imageSrc: null
+    , classNameSuffixes: []
+    , transforms: [] }
 
 
   setCSSClass = suffix => _ => {
@@ -17,25 +18,31 @@ class App extends Component {
     ]})
   }
 
+  setTransform = t => _ => {
+    const {transforms} = this.state
+    this.setState({transforms: [
+      ...transforms
+      , t
+    ]})
+  }
+
   allActions = [{ id: 1
     , action: 'rotate'
-    , classNameSuffix: 'rotated'
-    , handler: this.setCSSClass('rotated')
+    , handler: this.setTransform('rotate(45deg)')
   } , { id: 2
     , action: 'translate'
-    , classNameSuffix: 'translated'
-    , handler: this.setCSSClass('translated')
+    , handler: this.setTransform('translateX(-40px)')
   } , { id: 3
     , action: 'opacity'
-    , classNameSuffix: 'opacity-changed'
-    , handler: this.setCSSClass('opacity-changed')
+    , handler: this.setCSSClass('transparent')
   } , { id: 1
     , action: 'scale'
-    , classNameSuffix: 'scaled'
-    , handler: this.setCSSClass('scaled')
+    , handler: this.setTransform('scale(0.5)')
   }]
 
-  clearTransforms = _ => this.setState({classNameSuffixes: []})
+  clearTransforms = _ =>
+    this.setState({ classNameSuffixes: []
+      , transforms: []})
 
   handleFileChange = e => {
     const reader = new FileReader()
@@ -53,12 +60,16 @@ class App extends Component {
   }
 
   render() {
+    const { imageSrc
+          , transforms
+          , classNameSuffixes } = this.state
     return (
       <div className="App">
         <ImageContainer
-          src={this.state.imageSrc}
+          src={imageSrc}
           handleFileChange={this.handleFileChange}
-          classNameSuffixes={this.state.classNameSuffixes} />
+          transforms={transforms}
+          classNameSuffixes={classNameSuffixes} />
         <Actions
           clear={this.clearTransforms}
           available={take(3, this.allActions)}
