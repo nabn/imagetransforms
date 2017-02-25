@@ -11,10 +11,28 @@ const allActions = [ 'rotate'
 ]
 
 class App extends Component {
+  state = { imageSrc: null }
+
+  handleFileChange = e => {
+    const reader = new FileReader()
+    const file = e.target.files[0]
+
+    reader.onloadend = _ => {
+      this.setState({
+        imageSrc: reader.result
+      })
+    }
+
+    reader.readAsDataURL(file)
+  }
+
   render() {
     return (
       <div className="App">
-        <ImageContainer />
+        <ImageContainer
+          src={this.state.imageSrc}
+          handleFileChange={this.handleFileChange}
+        />
         <Actions
           available={take(3, allActions)}
           applied={takeLast(1, allActions)}

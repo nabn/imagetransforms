@@ -1,13 +1,19 @@
 import React from 'react'
 
-const ImageContainer = _ => (
+const ImageContainer = ({ handleFileChange, src }) => (
   <div className='image-container'>
-    <div className='image'></div>
-    <button
+    <div className='image-wrapper'>
+      <img
+        src={src}
+        className='picked-image'
+        alt='pick one'/>
+    </div>
+    <input
+      onChange={handleFileChange}
       className='choose-image-button'
-      onClick={console.log}>
-      Choose Image
-    </button>
+      accept='image/*'
+      capture='camera'
+      type='file'/>
   </div>
 )
 
