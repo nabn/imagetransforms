@@ -34,7 +34,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: lightblue;
 }
 
 .image-container img {
@@ -54,6 +53,14 @@ button {
 
 .rotated {
   transform: rotate(45deg);
+}
+
+.opacity-changed {
+  opacity: 0.5;
+}
+
+.scaled {
+  transform: scale(0.5);
 }
 
 /* Actions */

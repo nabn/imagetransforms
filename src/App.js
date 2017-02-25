@@ -31,8 +31,8 @@ class App extends Component {
     , handler: this.setCSSClass('opacity-changed')
   } , { id: 1
     , action: 'scale'
-    , classNameSuffix: 'rotated'
-    , handler: this.setCSSClass('scale')
+    , classNameSuffix: 'scaled'
+    , handler: this.setCSSClass('scaled')
   }]
 
   clearTransforms = _ => this.setState({classNameSuffixes: []})
@@ -40,6 +40,8 @@ class App extends Component {
   handleFileChange = e => {
     const reader = new FileReader()
     const file = e.target.files[0]
+
+    if (!file) return
 
     reader.onloadend = _ => {
       this.setState({
