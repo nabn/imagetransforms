@@ -24,13 +24,20 @@ button {
   flex-direction: column;
   flex: 1;
   margin: 5px;
+  justify-content: space-between;
 }
 
 .image-wrapper {
   width: 50vw;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: lightblue;
 }
 
-.picked-image {
+.image-container img {
   max-width: 100%;
   max-height: 100%;
 }
@@ -39,6 +46,14 @@ button {
   font-size: 1rem;
   font-family: 'Fira Sans';
   margin: 5px 0;
+}
+
+.translated {
+  transform: translateX(-40px);
+}
+
+.rotated {
+  transform: rotate(45deg);
 }
 
 /* Actions */

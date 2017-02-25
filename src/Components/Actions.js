@@ -1,11 +1,12 @@
 import React from 'react'
 
-const Actions = ({ available, applied }) => {
+const Actions = ({ available, applied, clear }) => {
   const renderActionButton = btn => (
     <button
-      key={btn}
+      key={btn.id}
+      onClick={btn.handler}
       className='action-button'>
-      {btn}
+      {btn.action}
     </button>
   )
 
@@ -18,7 +19,9 @@ const Actions = ({ available, applied }) => {
       <div className='applied flex-actions'>
         <h4>Applied Actions</h4>
         {applied.map(renderActionButton)}
-        <button className='reset action-button'>
+        <button
+          onClick={clear}
+          className='reset action-button'>
           reset
         </button>
       </div>

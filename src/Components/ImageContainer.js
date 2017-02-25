@@ -1,12 +1,12 @@
 import React from 'react'
 
-const ImageContainer = ({ handleFileChange, src }) => (
+const ImageContainer = ({ handleFileChange, src, classNameSuffixes }) => (
   <div className='image-container'>
     <div className='image-wrapper'>
       <img
         src={src}
-        className='picked-image'
-        alt='pick one'/>
+        role='presentation'
+        className={'picked-image ' + classNameSuffixes.join(' ')}/>
     </div>
     <input
       onChange={handleFileChange}
