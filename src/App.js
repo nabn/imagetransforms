@@ -5,14 +5,10 @@ import Actions from './Components/Actions'
 import { take, takeLast } from 'ramda'
 
 class App extends Component {
-  state = { imageSrc: null
-    , classNameSuffixes: []
-    , transforms: [] }
-
 
   setCSSClass = suffix => _ => {
-    const {classNameSuffixes} = this.state
-    this.setState({classNameSuffixes: [
+    const { classNameSuffixes } = this.state
+    this.setState({ classNameSuffixes: [
       ...classNameSuffixes
       , suffix
     ]})
@@ -27,18 +23,25 @@ class App extends Component {
   }
 
   allActions = [{ id: 1
-    , action: 'rotate'
+    , label: 'rotate'
     , handler: this.setTransform('rotate(45deg)')
   } , { id: 2
-    , action: 'translate'
+    , label: 'translate'
     , handler: this.setTransform('translateX(-40px)')
   } , { id: 3
-    , action: 'opacity'
+    , label: 'opacity'
     , handler: this.setCSSClass('transparent')
   } , { id: 1
-    , action: 'scale'
+    , label: 'scale'
     , handler: this.setTransform('scale(0.5)')
   }]
+
+  state = { imageSrc: null
+    , classNameSuffixes: []
+    , transforms: []
+    , availableActions: [...this.allActions]
+    , appliedActions: [] }
+
 
   clearTransforms = _ =>
     this.setState({ classNameSuffixes: []
@@ -51,6 +54,7 @@ class App extends Component {
     if (!file) return
 
     reader.onloadend = _ => {
+      this.clearTransforms()
       this.setState({
         imageSrc: reader.result
       })

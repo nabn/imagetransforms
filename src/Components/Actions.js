@@ -6,7 +6,7 @@ const Actions = ({ available, applied, clear }) => {
       key={btn.id}
       onClick={btn.handler}
       className='action-button'>
-      {btn.action}
+      {btn.label}
     </button>
   )
 
