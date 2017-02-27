@@ -3,8 +3,7 @@ import React from 'react'
 const ImageContainer = ({ handleFileChange, src, transforms, classNameSuffixes }) => (
   <div className='image-container'>
     <div
-      className='image-wrapper'
-      style={!src ? {background: '#eee'} : {}}>
+      className={`image-wrapper ${!src && 'empty'}`}>
       {src
         ? <img
             src={src}

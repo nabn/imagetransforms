@@ -4,6 +4,10 @@
   transition: all 0.5s ease;
 }
 
+#root {
+  min-width: 500px;
+}
+
 .App {
   padding: 2vw;
   display: flex;
@@ -31,12 +35,18 @@ button {
 .image-wrapper {
   width: 50vw;
   max-width: 500px;
+  min-width: 300px;
   flex: 1;
   padding: 2vw;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.image-wrapper.empty {
+  background: #eee;
+  border-radius: 4px;
 }
 
 .image-container img {
@@ -61,6 +71,7 @@ button {
   display: flex;
   color: darkgray;
   align-items: flex-start;
+  min-width: 300px;
 }
 
 .flex-actions {
@@ -75,7 +86,7 @@ button {
 
 .action-button {
   margin: 10px 5px;
-  width: 50%;
+  min-width: 95%;
 }
 
 .action-button.reset {
@@ -90,4 +101,28 @@ button {
 
 h4 {
   font-weight: normal;
+  padding: 0 5%;
+}
+
+@media (max-width: 550px) {
+  * {
+    font-size: 1.2rem;
+  }
+  body {
+    width: 100vw;
+    height: 100vh;
+  }
+  .App {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .image-container {
+    min-height: 60vh;
+  }
+  .image-wrapper.empty {
+    width: 95%;
+  }
+  .flex-actions {
+    align-items: flex-start;
+  }
 }
