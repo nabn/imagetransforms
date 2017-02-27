@@ -1,6 +1,7 @@
 * {
   font-family: 'Fira Sans';
   color: #444;
+  transition: all 0.5s ease;
 }
 
 .App {
@@ -59,7 +60,7 @@ button {
   margin: 5px;
   display: flex;
   color: darkgray;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .flex-actions {
@@ -80,6 +81,11 @@ button {
 .action-button.reset {
   align-self: flex-end;
   width: 30%;
+  background: red;
+  opacity: 0.7;
+  color: white;
+  border: none;
+  padding: auto 10px;
 }
 
 h4 {
